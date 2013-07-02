@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require_relative 'config/kuali-vagrant-config.rb'
+
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -13,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "kualiadm"
 
   #build the kuali environment
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "app-server/bootstrap.sh"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -29,12 +31,12 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder ENV['KFS_TARGET_WEBROOT'], "/var/opt/kuali/tomcat/kfs/webapps/kfs-dev"
-  config.vm.synced_folder ENV['KFS_WORK'], "/home/kualiadm/env/kfs/opt/work/dev/kfs"
-  config.vm.synced_folder ENV['KFS_CONFIG'], "/home/kualiadm/env/kfs/config"
-  config.vm.synced_folder ENV['KC_TARGET_WEBROOT'], "/var/opt/kuali/tomcat/kc/webapps/kc-dev"
-  config.vm.synced_folder ENV['KC_CONFIG'], "/home/kualiadm/kuali/main/dev"
-  config.vm.synced_folder ENV['KC_DRIVERS'], "/home/kualiadm/env/kc/drivers"
-  config.vm.synced_folder ENV['RHUBARB_HOME'], "/opt/kuali/rhubarb"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kfs_eclipse_project]}/work/web-root", "/var/opt/kuali/tomcat/kfs/webapps/kfs-dev"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_work]}", "/home/kualiadm/env/kfs/opt/work/dev/kfs"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_config]}", "/home/kualiadm/env/kfs/config"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_eclipse_project]}/target/kc_custom-3.1.1", "/var/opt/kuali/tomcat/kc/webapps/kc-dev"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_vagrant_env]}/config", "/home/kualiadm/kuali/main/dev"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_vagrant_env]}/drivers", "/home/kualiadm/env/kc/drivers"
+  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:rhubarb_home]}", "/opt/kuali/rhubarb"
 
 end

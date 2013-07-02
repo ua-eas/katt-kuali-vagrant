@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+require_relative '../config/kuali-vagrant-config.rb'
+
+class KualiVagrantSetup < Thor
+  desc "destroy", "Blow away kuali vagrant environment directories on your local machine."
+  def destroy()
+    puts "Removing Vagrant Environment Directories"
+    FileUtils.rm_rf(KualiVagrant::Config::DIRECTORIES[:kc_vagrant_env])
+    FileUtils.rm_rf(KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_env])
+  end
+  desc "setup", "Creates the directory structure for the kuali vagrant environment."
+  def setup()
+    puts "Setting Up Vagrant Environment Directories"
+
+    #KC Directories
+    FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kc_vagrant_config], :verbose => true
+    FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kc_vagrant_drivers], :verbose => true
+
+    #KFS Directories
+    FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_config], :verbose => true
+    FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_work], :verbose => true
+  end
+end
+
+KualiVagrantSetup.start(ARGV)

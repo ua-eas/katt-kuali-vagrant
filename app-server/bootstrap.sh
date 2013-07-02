@@ -63,8 +63,10 @@ su - kualiadm -c 'gem install bundler'
 # echo 'Installing all requisite gems (listed in Gemfile) for rhubarb'
 # su - kualiadm -c 'cd /opt/kuali/rhubarb; bundler install'
 
-#Make sure BATCH_HOME and the kfs work directory are linked
-ln -s /home/kualiadm/env/kfs/opt/work/dev/kfs /mosaic/data/uazkf/dev
+# #Make sure BATCH_HOME and the kfs work directory are linked
+# mkdir -p /mosaic/data/uazkf/dev
+# chmod -R 777 /mosaic/data
+# ln -s /home/kualiadm/env/kfs/opt/work/dev/kfs /mosaic/data/uazkf/dev
 
 echo 'Setting up kbatch user to use rhubarb'
 su - kbatch -c 'echo "export BATCH_HOME=/mosaic/data/uazkf/dev/" >> $HOME/.bashrc'
@@ -87,3 +89,13 @@ su - kbatch -c 'which batch_log'
 #Not sure why the local maven build for KC does not include the jdbc jar.. This is a 
 #hack for now until I can figure out the maven local build stuff.
 cp /home/kualiadm/env/kc/drivers/ojdbc14.jar /var/opt/kuali/tomcat/kc/lib/
+
+# overwrite the hosts file that comes with the image
+mv /etc/hosts /etc/hosts.orig
+cp /vagrant/hosts /etc/hosts
+
+# replace the ksi generated server.xml.. the proxy and secure settings will be wrong. 
+# Note: If testing ksi, you will need to check the server.xml.ksi instead of server.xml
+#       to make sure ksi created that file properly.
+mv /var/opt/kuali/tomcat/kc/conf/server.xml /var/opt/kuali/tomcat/kc/conf/server.xml.ksi
+cp /vagrant/local-server.xml /var/opt/kuali/tomcat/kc/conf/server.xml
