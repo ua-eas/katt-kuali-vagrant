@@ -27,6 +27,8 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8216, host: 8181 # KC http port
   config.vm.network :forwarded_port, guest: 8206, host: 8080 # KFS http port
 
+  config.ssh.forward_agent = true
+
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
@@ -37,6 +39,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_eclipse_project]}/target/kc_custom-3.1.1", "/var/opt/kuali/tomcat/kc/webapps/kc-dev"
   config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_vagrant_env]}/config", "/home/kualiadm/kuali/main/dev"
   config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:kc_vagrant_env]}/drivers", "/home/kualiadm/env/kc/drivers"
-  config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:rhubarb_home]}", "/opt/kuali/rhubarb"
+
+  config.vm.synced_folder "/home/shaloo/code/ksi", "/home/kualiadm/ksi"
+  #config.vm.synced_folder "#{KualiVagrant::Config::DIRECTORIES[:rhubarb_home]}", "/opt/kuali/rhubarb"
 
 end

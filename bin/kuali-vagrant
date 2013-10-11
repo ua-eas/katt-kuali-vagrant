@@ -21,6 +21,9 @@ class KualiVagrantSetup < Thor
     #KFS Directories
     FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_config], :verbose => true
     FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_work], :verbose => true
+    FileUtils.mkdir_p KualiVagrant::Config::DIRECTORIES[:kfs_vagrant_servers], :verbose => true
+
+
   end
 end
 

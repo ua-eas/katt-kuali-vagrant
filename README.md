@@ -2,8 +2,6 @@
 
 Kuali Vagrant is a project designed to standardize the developer workstation setup for the kuali applications technical team at the UofA. The plan is to use Vagrant http://www.vagrantup.com/ and KSI https://github.com/ua-eas/ksi to easily deploy local development instances of our Kuali applications while exactly mirroring the deployed environements. 
 
-So, how will this work? Kuali Vagrant will allow you to 
-
 ## Examples
 
 Kuail Vagrant makes it extremely easy to setup a local development environment that exactly (well as close as we can get to exactly) mimics deployment environemnts (PRD, DEV, TST, etc.). With a single command, you can build a complete environment based on KSI.
